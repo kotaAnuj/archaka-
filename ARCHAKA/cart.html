@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced Booking System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">Booking System</a>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">Cart <span id="cart-count" class="badge bg-danger">0</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <h2 class="mb-4">Your Cart</h2>
+        <div id="cart-items" class="row"></div>
+        <button id="proceed-btn" class="btn btn-primary mt-4" disabled data-bs-toggle="modal" data-bs-target="#bookingModal">Proceed to Book</button>
+
+        <h2 class="mt-5">Your Bookings</h2>
+        <div id="booking-list" class="row"></div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div class="modal fade" id="bookingModal" tabindex="-1" aria-labelledby="bookingModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bookingModalLabel">Booking Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="booking-form">
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="date" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="time" class="form-label">Time</label>
+                            <input type="time" class="form-control" id="time" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="priest-service" class="form-label">Priest Service</label>
+                            <select id="priest-service" class="form-select" required></select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="contact-number" class="form-label">Contact Number</label>
+                            <input type="tel" class="form-control" id="contact-number" placeholder="Enter your contact number" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Location</label>
+                            <input type="text" class="form-control" id="location" placeholder="Enter your location" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Confirm Booking</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js';
+        import { getFirestore, collection, addDoc, deleteDoc, onSnapshot, doc } from 'https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC6YllFBzRnUjFfIJhGjIkwMlGELuKs9YQ",
+            authDomain: "nothing-d3af4.firebaseapp.com",
+            projectId: "nothing-d3af4",
+            storageBucket: "nothing-d3af4.appspot.com",
+            messagingSenderId: "7155955115",
+            appId: "1:7155955115:web:62e7e9a543ba2f77dc8eee",
+            measurementId: "G-JNLGNYK8DM"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartContainer = document.getElementById('cart-items');
+        const proceedBtn = document.getElementById('proceed-btn');
+        const cartCount = document.getElementById('cart-count');
+        const priestServiceDropdown = document.getElementById('priest-service');
+
+        const loadCart = () => {
+            cartContainer.innerHTML = '';
+            if (cart.length === 0) {
+                cartContainer.innerHTML = '<p class="text-muted">Your cart is empty.</p>';
+                proceedBtn.disabled = true;
+            } else {
+                cart.forEach((item, index) => {
+                    const col = document.createElement('div');
+                    col.className = 'col-md-4 mb-4';
+                    col.innerHTML = `
+                        <div class="card p-3">
+                            <h5>${item.title}</h5>
+                            <p>₹${item.price}</p>
+                            <button class="btn btn-danger btn-sm" onclick="removeFromCart(${index})">Remove</button>
+                        </div>
+                    `;
+                    cartContainer.appendChild(col);
+                });
+                proceedBtn.disabled = false;
+            }
+            cartCount.textContent = cart.length;
+        };
+
+        window.removeFromCart = (index) => {
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            loadCart();
+            Swal.fire('Removed!', 'Item removed from cart', 'info');
+        };
+
+        const loadPriestServicesFromCart = () => {
+            priestServiceDropdown.innerHTML = '';
+            if (cart.length === 0) {
+                const emptyOption = document.createElement('option');
+                emptyOption.value = '';
+                emptyOption.textContent = 'No services available';
+                priestServiceDropdown.appendChild(emptyOption);
+                return;
+            }
+            cart.forEach((item) => {
+                const option = document.createElement('option');
+                option.value = item.title;
+                option.textContent = item.title;
+                priestServiceDropdown.appendChild(option);
+            });
+        };
+
+        const addBooking = async (data) => {
+            try {
+                await addDoc(collection(db, 'bookings'), data);
+                Swal.fire('Success!', 'Booking added successfully!', 'success');
+            } catch (error) {
+                console.error('Error adding booking:', error);
+            }
+        };
+
+        const loadBookings = async () => {
+            onSnapshot(collection(db, 'bookings'), (snapshot) => {
+                const bookingList = document.getElementById('booking-list');
+                bookingList.innerHTML = '';
+                snapshot.forEach((doc) => {
+                    const booking = doc.data();
+                    const col = document.createElement('div');
+                    col.className = 'col-md-4 mb-4';
+                    col.innerHTML = `
+                        <div class="card p-3">
+                            <h5>Service: ${booking.service}</h5>
+                            <p>Date: ${booking.date}</p>
+                            <p>Time: ${booking.time}</p>
+                            <p>Contact: ${booking.contactNumber}</p>
+                            <p>Location: ${booking.location}</p>
+                            <button class="btn btn-danger btn-sm" onclick="cancelBooking('${doc.id}')">Cancel</button>
+                        </div>
+                    `;
+                    bookingList.appendChild(col);
+                });
+            });
+        };
+
+        window.cancelBooking = async (id) => {
+            try {
+                await deleteDoc(doc(db, 'bookings', id));
+                Swal.fire('Cancelled!', 'Booking cancelled successfully!', 'info');
+            } catch (error) {
+                console.error('Error cancelling booking:', error);
+            }
+        };
+
+        document.getElementById('booking-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+            const service = priestServiceDropdown.value;
+            const contactNumber = document.getElementById('contact-number').value;
+            const location = document.getElementById('location').value;
+
+            if (date && time && service && contactNumber && location) {
+                const bookingData = {
+                    date,
+                    time,
+                    service,
+                    contactNumber,
+                    location,
+                    cartItems: cart,
+                };
+                await addBooking(bookingData);
+                localStorage.removeItem('cart');
+                loadCart();
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCart();
+            loadPriestServicesFromCart();
+            loadBookings();
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

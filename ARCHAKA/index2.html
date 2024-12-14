@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archaka Online Services</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fdf3e3;
+            color: #333;
+        }
+
+        .navbar {
+            background-color: #ffc107; /*important nav bar colour */
+        }
+
+        .navbar-brand,
+        .nav-link {
+            color: #fff !important;
+        }
+
+        .nav-link:hover {
+            color: #ffd699 !important;
+        }
+
+        .navigation {
+            background-color: rgb(168, 38, 38);
+            padding: 10px 0;
+        }
+
+        .navigation .nav-item .nav-link {
+            color: #fff !important;
+        }
+
+        .navigation .nav-link:hover {
+            color: #ffd699 !important;
+        }
+
+        .hero-carousel {
+            position: relative;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .search-bar input {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 5px 10px;
+            width: 300px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-buttons a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .action-buttons a:hover {
+            color: #ffd699;
+        }
+
+        .service-card {
+            transition: transform 0.3s ease-in-out;
+            background-color: #fff;
+            border: 1px solid #eaeaea;
+            border-radius: 8px;
+            text-align: center;
+            padding: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        footer {
+            background-color: #ff9800;
+            color: #fff;
+        }
+
+        footer a {
+            color: #ffd699;
+        }
+
+        footer a:hover {
+            color: #fff;
+        }
+
+        .testimonial-slider {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonial-container {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .testimonial {
+            flex: 0 0 100%;
+            padding: 2rem;
+            text-align: center;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .slider-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .slider-button {
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+
+
+        .col-md-4 {
+            padding-top: 3rex;
+            flex: 0 0 auto;
+            width: 33.33333333%;
+        }
+
+
+        /* Custom Styles */
+        .hero-carousel img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+        
+        .navbar {
+            background-color: #ff9800 !important;
+        }
+        
+        .nav-link {
+            color: white !important;
+        }
+        
+        .statistics {
+            background-color: #f8f9fa;
+        }
+        
+        .card {
+            transition: transform 0.3s;
+            height: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .testimonial-slider {
+            position: relative;
+            padding: 2rem 0;
+        }
+        
+        .testimonial-container {
+            overflow: hidden;
+            padding: 1rem;
+        }
+        
+        .testimonial {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin: 1rem 0;
+        }
+        
+        .slider-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .search-bar {
+            position: relative;
+            max-width: 300px;
+            margin: 0 auto;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="archaka.png" alt="Priest Services Logo" style="height: 50px;">
+            </a>
+            
+            <div class="search-bar mx-auto">
+                <input type="text" class="form-control" placeholder="Search">
+            </div>
+            
+            <div class="action-buttons">
+                <button id="profileButton" class="btn btn-light me-2" data-bs-toggle="modal" data-bs-target="#profileModal">
+                    Profile
+                </button>
+                <button id="cartButton" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#cartModal">
+                    Cart
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #ff9800; color: white;">
+                    <h5 class="modal-title" id="profileModalLabel">Your Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Name:</strong> <span id="userName">Loading...</span></p>
+                    <p><strong>Email:</strong> <span id="userEmail">Loading...</span></p>
+                    <button id="logoutBtn" class="btn btn-danger">Logout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #ff9800; color: white;">
+                    <h5 class="modal-title" id="cartModalLabel">Your Cart</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="cartItems">
+                    Loading cart items...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Carousel -->
+    <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img href="https://vegajewellers.com/" src="https://www.telugu360.com/wp-content/uploads/2023/03/ACF5F3CA-467C-4F84-ACC3-ABB29D028822.jpeg" alt="Service 1">
+            </div>
+            <div class="carousel-item">
+                <img href="https://vegajewellers.com/" src="https://tse2.mm.bing.net/th/id/OIP.vuc9o2oRP7E-dCoYcIjfzAHaEK?w=1600&h=900&rs=1&pid=ImgDetMain" alt="Service 2">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <!-- Services Section -->
+    <section class="container my-5">
+        <div class="row gy-4">
+            <!-- Vivaha -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="vivaha.jpg" class="card-img-top" alt="Vivaha Ceremony">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Vivaha Ceremony</h5>
+                        <p class="card-text">Vivaha is a sacred Hindu wedding ceremony that unites two souls in a bond of love and commitment.</p>
+                        <a href="template.html?ceremony=vivaha" class="btn btn-primary">
+                            <i class="fas fa-arrow-right"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Namakarana -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="naamkaranam.jpg" class="card-img-top" alt="Namakarana Ceremony">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Namakarana Ceremony</h5>
+                        <p class="card-text">Celebrate the auspicious Hindu naming ceremony for your newborn.</p>
+                        <a href="template.html?ceremony=namakarana" class="btn btn-primary">
+                            <i class="fas fa-arrow-right"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Annaprashana -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="annaprasana.jpg" class="card-img-top" alt="Annaprashana Ceremony">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Annaprashana Ceremony</h5>
+                        <p class="card-text">Mark your child’s first intake of solid food with blessings.</p>
+                        <a href="template.html?ceremony=annaprashana" class="btn btn-primary">
+                            <i class="fas fa-arrow-right"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Upanayana -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="upanya.webp" class="card-img-top" alt="Upanayana Ceremony">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Upanayana Ceremony</h5>
+                        <p class="card-text">Begin the spiritual journey with the sacred thread ritual.</p>
+                        <a href="template.html?ceremony=upanayana" class="btn btn-primary">
+                            <i class="fas fa-arrow-right"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Antyeshti -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="nichyatram.jpg" class="card-img-top" alt="Antyeshti Ceremony">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Nichyatram Ceremony</h5>
+                        <p class="card-text">Celebrate the auspicious occasion of betrothal with the sacred Nichyatram ceremony.</p>
+                        <a href="template.html?ceremony=antyeshti" class="btn btn-primary">
+                            <i class="fas fa-arrow-right"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Griha Pravesha -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="griha_pravesha.jpg" class="card-img-top" alt="Griha Pravesha Ceremony">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Griha Pravesha Ceremony</h5>
+                        <p class="card-text">Bless your new home with peace and prosperity.</p>
+                        <a href="template.html?ceremony=griha_pravesha" class="btn btn-primary">
+                            <i class="fas fa-arrow-right"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Karan Vedha -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="karan_vedha.jpg" class="card-img-top" alt="Karan Vedha Ceremony">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Karan Vedha Ceremony</h5>
+                        <p class="card-text">Experience the spiritual journey with the sacred Karan Vedha ritual.</p>
+                        <a href="template.html?ceremony=karan_vedha" class="btn btn-primary">
+                            <i class="fas fa-arrow-right"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        
+            <!-- Rudra Abhishekam -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="rudra_abhishekam.jpg" class="card-img-top" alt="Rudra Abhishekam Ceremony">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Rudra Abhishekam Ceremony</h5>
+                        <p class="card-text">Invoke Lord Shiva’s blessings for peace and prosperity.</p>
+                        <a href="template.html?ceremony=rudra_abhishekam" class="btn btn-primary">
+                            <i class="fas fa-arrow-right"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Satyanarayan Puja -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="satyanarayan_puja.jpg" class="card-img-top" alt="Satyanarayan Puja">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Satyanarayan Puja</h5>
+                        <p class="card-text">Seek blessings for prosperity and wellbeing with this sacred ritual.</p>
+                        <a href="template.html?ceremony=satyanarayan_puja" class="btn btn-primary">
+                            <i class="fas fa-arrow-right"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        
+            <!-- Kumbabishegam -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="kumbabishegam.jpg" class="card-img-top" alt="Kumbabishegam Ceremony">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Kumbabishegam Ceremony</h5>
+                        <p class="card-text">Revitalization of spiritual energy within the temple’s premises.</p>
+                        <a href="template.html?ceremony=kumbabishegam" class="btn btn-primary">
+                            <i class="fas fa-arrow-right"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        
+            <!-- Aksharabhyasam -->
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="aksharabhyasam.jpg" class="card-img-top" alt="Aksharabhyasam Ceremony">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Aksharabhyasam Ceremony</h5>
+                        <p class="card-text">An auspicious ritual where a child is introduced to formal education.</p>
+                        <a href="template.html?ceremony=aksharabhyasam" class="btn btn-primary">
+                            <i class="fas fa-arrow-right"></i> Learn More
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="statistics text-center py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h2>10+</h2>
+                    <p>Pujas Booked</p>
+                </div>
+                <div class="col-md-4">
+                    <h2>5+</h2>
+                    <p>Homas Booked</p>
+                </div>
+                <div class="col-md-4">
+                    <h2>25+</h2>
+                    <p>Expert Pandits</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="container my-5">
+        <div class="testimonial-slider">
+            <div class="testimonial-container">
+                <div class="testimonial">
+                    <p>The priest performed our ceremony on Aadi Amavasya (New Moon) day. He explained every step in detail.</p>
+                </div>
+                <div class="testimonial">
+                    <p>The priest blessed me after the pooja and said it would reduce negative happenings caused by Navagraha doshas.</p>
+                </div>
+            </div>
+            <div class="slider-buttons">
+                <button class="btn btn-primary" onclick="prevTestimonial()">←</button>
+                <button class="btn btn-primary" onclick="nextTestimonial()">→</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="container text-center py-3">
+        <p>© 2024 Archaka Online. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script type="module">
+        // Firebase Configuration
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC6YllFBzRnUjFfIJhGjIkwMlGELuKs9YQ",
+            authDomain: "nothing-d3af4.firebaseapp.com",
+            projectId: "nothing-d3af4",
+            storageBucket: "nothing-d3af4.firebasestorage.app",
+            messagingSenderId: "7155955115",
+            appId: "1:7155955115:web:62e7e9a543ba2f77dc8eee",
+            measurementId: "G-JNLGNYK8DM"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        // Check authentication state
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                console.log("User is authenticated:", user.email);
+                // Update UI elements
+                document.getElementById('userEmail').textContent = user.email;
+                document.getElementById('userName').textContent = user.displayName || 'User';
+            } else {
+                console.log("No user authenticated, redirecting to login...");
+                window.location.href = 'index.html';
+            }
+        });
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                sessionStorage.removeItem('authToken');
+                localStorage.removeItem('userEmail');
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+                alert('Logout failed: ' + error.message);
+            }
+        });
+    </script>
+
+    <script>
+        // Testimonial Slider functionality
+        let currentTestimonial = 0;
+        const testimonials = document.querySelectorAll('.testimonial');
+        
+        function showTestimonial(index) {
+            testimonials.forEach((testimonial, i) => {
+                testimonial.style.display = i === index ? 'block' : 'none';
+            });
+        }
+        
+        function nextTestimonial() {
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            showTestimonial(currentTestimonial);
+        }
+        
+        function prevTestimonial() {
+            currentTestimonial = (currentTestimonial - 1 + testimonials.length) % testimonials.length;
+            showTestimonial(currentTestimonial);
+        }
+        
+        // Initialize testimonial display
+        showTestimonial(0);
+
+        // Auto-advance testimonials every 5 seconds
+        setInterval(nextTestimonial, 5000);
+    </script>
+
+
+    <script>
+        // Use LangflowClient from provided API code
+        const applicationToken = '<YOUR_APPLICATION_TOKEN>';
+        const langflowClient = new LangflowClient('https://api.langflow.astra.datastax.com', applicationToken);
+        
+        document.getElementById('sendButton').addEventListener('click', async () => {
+            const inputValue = document.getElementById('chatInput').value.trim();
+            const chatOutput = document.getElementById('chatOutput');
+            
+            if (inputValue) {
+                chatOutput.innerHTML = "Processing your query...";
+                try {
+                    const flowIdOrName = 'abd262a5-ee6c-49ae-8a9d-d16218ecfb38';
+                    const langflowId = '3d1715c9-b923-4e77-8394-4b6e4143d4ed';
+                    const tweaks = {
+                        // Add your tweaks object here from the API code
+                    };
+
+                    const response = await langflowClient.runFlow(
+                        flowIdOrName,
+                        langflowId,
+                        inputValue,
+                        'chat',
+                        'chat',
+                        tweaks,
+                        false, // Set to true if streaming responses
+                        (data) => chatOutput.innerHTML += `<p>${data.chunk}</p>`, // onUpdate
+                        () => chatOutput.innerHTML += "<p>Stream Closed</p>", // onClose
+                        (error) => chatOutput.innerHTML = `<p>Error: ${error}</p>` // onError
+                    );
+
+                    if (response && response.outputs) {
+                        const outputText = response.outputs[0]?.outputs[0]?.outputs?.message?.text || "No response.";
+                        chatOutput.innerHTML = `<p>${outputText}</p>`;
+                    }
+                } catch (error) {
+                    chatOutput.innerHTML = `<p>Error: ${error.message}</p>`;
+                }
+            } else {
+                chatOutput.innerHTML = "<p>Please enter a query.</p>";
+            }
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

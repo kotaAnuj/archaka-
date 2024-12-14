@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Archaka Online Services</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.x.x/firebase-firestore.js"></script>
+  <!-- Header Section -->
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #ffc107;">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="archaka.png" alt="Priest Services Logo" style="height: 50px;">
+      </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="#hero">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+            <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+            <li class="nav-item">
+              <button class="btn btn-light text-warning" data-bs-toggle="modal" data-bs-target="#loginModal">Book Now</button>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+        
+        <div class="search-bar">
+            <input type="text" placeholder="Search for services, rituals, or products">
+            <button class="btn btn-light">Search</button>
+        </div>
+        <div class="action-buttons">
+            <a href="#" class="nav-link" id="profileButton" data-bs-toggle="modal" data-bs-target="#profileModal">
+                <i class="fas fa-user-circle"></i> Profile
+            </a>
+            <a href="#" class="nav-link" id="cartButton" data-bs-toggle="modal" data-bs-target="#cartModal">
+                <i class="fas fa-shopping-cart"></i> Cart
+            </a>
+        </div>
+    </div>
+</nav>
+
+  <!-- Hero Section -->
+  <section id="hero" class="py-5" style="background-color: #fce9d4;">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <h1 style="color: #ff9800;">Connecting You to Divine Services</h1>
+          <p>Book authentic Vedic priests for your spiritual rituals. Experience a seamless way to connect with tradition.</p>
+          <button class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#loginModal">Book Now</button>
+        </div>
+        <div class="col-md-6 text-center">
+          <img src="priest.jpg" alt="Priest performing rituals" class="img-fluid rounded">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Login Modal -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: #ff9800; color: white;">
+          <h5 class="modal-title" id="loginModalLabel">Login</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="loginForm">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email Address</label>
+              <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" id="submitSignIn" class="btn btn-warning w-100 text-white">Login</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button id="googleSignInButton" class="btn btn-warning text-white w-100">Sign in with Google</button>
+          <p class="mx-auto">Don't have an account? <a href="register.html" style="color: #ff9800;">Sign up</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js" type="module"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  
+  <!-- Services Section -->
+  <section id="services" class="py-5" style="background-color: #fef7e8;">
+    <div class="container text-center">
+      <h2 style="color: #ff9800;">Our Services</h2>
+      <div class="row g-4 mt-4">
+        <div class="col-md-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+              <h3 style="color: #ff9800;">Homas</h3>
+              <p>Perform sacred fire rituals for purification and prosperity.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+              <h3 style="color: #ff9800;">Pujas</h3>
+              <p>Customized pujas for health, success, and well-being.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-body text-center">
+              <h3 style="color: #ff9800;">Temple Visits</h3>
+              <p>Organize your temple visits with ease and devotion.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-5 text-center">
+    <div class="container">
+      <h2 style="color: #ff9800;">About Archaka Online</h2>
+      <p>
+        At Archaka Online, we ensure seamless access to authentic Vedic rituals. Our experienced priests are here to help you meet your spiritual needs with dedication and tradition.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-5" style="background-color: #fef7e8;">
+    <div class="container text-center">
+      <h2 style="color: #ff9800;">Contact Us</h2>
+      <form action="#" method="post" class="mx-auto" style="max-width: 500px;">
+        <div class="mb-3">
+          <input type="text" name="name" placeholder="Your Name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <input type="email" name="email" placeholder="Your Email" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <textarea name="message" placeholder="Your Message" rows="4" class="form-control" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-warning text-white">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer Section -->
+  <footer class="text-white text-center py-3" style="background-color: #ff9800;">
+    <p>&copy; 2024 Archaka Online. All Rights Reserved.</p>
+  </footer>
+  <!-- Replace all your script tags with these: -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-auth.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/10.11.1/firebase-firestore.js";
+
+    // Firebase Configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyC6YllFBzRnUjFfIJhGjIkwMlGELuKs9YQ",
+        authDomain: "nothing-d3af4.firebaseapp.com",
+        projectId: "nothing-d3af4",
+        storageBucket: "nothing-d3af4.firebasestorage.app",
+        messagingSenderId: "7155955115",
+        appId: "1:7155955115:web:62e7e9a543ba2f77dc8eee",
+        measurementId: "G-JNLGNYK8DM"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Check if user is already logged in
+    auth.onAuthStateChanged((user) => {
+        if (user) {
+            console.log("User is already logged in:", user.email);
+            window.location.href = 'index2.html'; // Updated path
+        }
+    });
+
+    // Email/Password Sign-In
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            
+            // Store auth data
+            localStorage.setItem('userEmail', user.email);
+            const token = await user.getIdToken();
+            sessionStorage.setItem('authToken', token);
+            
+            console.log("Login successful, redirecting...");
+            window.location.href = 'index2.html'; // Updated path
+        } catch (error) {
+            console.error('Error during sign-in:', error);
+            alert('Login failed: ' + error.message);
+        }
+    });
+
+    // Google Sign-In
+    document.getElementById('googleSignInButton').addEventListener('click', async () => {
+        const provider = new GoogleAuthProvider();
+        provider.setCustomParameters({
+            prompt: 'select_account'
+        });
+
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            
+            // Store auth data
+            localStorage.setItem('userEmail', user.email);
+            const token = await user.getIdToken();
+            sessionStorage.setItem('authToken', token);
+            
+            console.log("Google login successful, redirecting...");
+            window.location.href = 'index2.html'; // Updated path
+        } catch (error) {
+            console.error('Google Sign-In error:', error);
+            alert('Google Sign-In Failed: ' + error.message);
+        }
+    });
+</script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
